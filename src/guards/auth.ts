@@ -8,13 +8,12 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<Request>()
     const res = context.switchToHttp().getResponse<Response>()
-
     const { refreshToken, accessToken } = req.cookies
 
     if (!accessToken) {
       if (refreshToken) {
         const decoded = await this.verifyToken(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY) as JwtPayload
-        // console.log('decoded',decoded)
+        console.log('decoded',decoded)
         if (decoded) {
           const newAccessToken = jwt.sign({ email: decoded.email }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: '15m' })
           res.cookie('accessToken', newAccessToken, { 
@@ -28,10 +27,12 @@ export class AuthGuard implements CanActivate {
           throw new HttpException('Unauthorized Exception', HttpStatus.UNAUTHORIZED)
         }
       } else {
+        res.clearCookie('accessToken')
+        res.clearCookie('refreshToken')
         throw new HttpException('LogoutRequired', HttpStatus.UNAUTHORIZED)
       }
     } else {
-      const decoded = await this.verifyToken(accessToken, process.env.SECRET_KEY)
+      const decoded = await this.verifyToken(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY)
       if (decoded) {
         return true
       } else {

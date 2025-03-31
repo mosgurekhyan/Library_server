@@ -23,4 +23,4 @@ async function bootstrap() {
   app.use(cookieParser())
   await app.listen(process.env.SERVER_PORT, () => console.log('\n☘️  Server connected!\n'))
 }
-bootstrap()  
+bootstrap()

@@ -1,5 +1,4 @@
 import { AuthService } from './auth.service'
-import { UpdateAuthDto } from './dto/update-auth.dto'
 import { CreateUserDTO } from '../user/dto/create-user.dto'
 import { UpdateUserDTO } from '../user/dto/update-user.dto';
 import { VerifyUserDTO } from '../user/dto/verify-user.dto'

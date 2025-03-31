@@ -10,10 +10,10 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 
-@Module({
+@Module({    
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI), 
+    MongooseModule.forRoot(process.env.MONGO_URI),
     UserModule,
     BookModule,
     AuthModule,
